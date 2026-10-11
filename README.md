@@ -4,7 +4,7 @@ A demo site for deployment, sign-in, and payments.
 
 - Signed-in users get access to the **Member Area** and can upgrade to **Premium Membership** for NT$99
 - Hosting: Vercel
-- Database and auth: Supabase (email one-time code / sign-in link)
+- Database and auth: Supabase (email sign-in link)
 - Payments: ECPay sandbox. To switch providers, replace `lib/ecpay.ts`
 
 ## Pages
@@ -14,7 +14,7 @@ A demo site for deployment, sign-in, and payments.
 | `/` | Home | No |
 | `/pricing` | Pricing | No |
 | `/terms` | Terms | No |
-| `/login` | Sign in with a one-time code or sign-in link | No |
+| `/login` | Sign in with an email link | No |
 | `/member` | Member Area, with the upgrade button | Yes |
 | `/orders` | My Orders | Yes |
 | `/payment/result` | Payment result | Yes |
@@ -51,19 +51,13 @@ A demo site for deployment, sign-in, and payments.
 
 1. Create a project
 2. In the **SQL Editor**, run `supabase/schema.sql`
-3. In **Authentication → Emails → Templates → Magic Link**, include both the code and the link, for example:
-   ```html
-   <h2>Sign in to Demo Member Site</h2>
-   <p>Your code: <strong>{{ .Token }}</strong></p>
-   <p>Or sign in with this link: <a href="{{ .ConfirmationURL }}">Sign in</a></p>
-   ```
-4. In **Authentication → URL Configuration**:
+3. In **Authentication → URL Configuration**:
    - **Site URL**: your production URL, e.g. `https://xxx.vercel.app`
    - **Redirect URLs**: add `http://localhost:3000/**` and `https://xxx.vercel.app/**`
    - If you later switch to a custom domain, add it here too
-5. In **Project Settings → API**, copy the Project URL, anon key, and service_role key
+4. Copy the Project URL (without `/rest/v1/`) from **Connect** or **Project Settings → Data API**, and the publishable (anon) key and secret (service_role) key from **Project Settings → API Keys**
 
-Supabase's built-in email service has an hourly sending limit.
+Supabase's built-in email service only sends a few emails per hour. If you see "email rate limit exceeded", wait an hour or set up custom SMTP in **Authentication → Emails**.
 
 ### 2. Run locally
 
