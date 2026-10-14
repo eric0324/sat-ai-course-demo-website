@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PLAN } from "@/lib/plans";
+import { PLAN } from "@/lib/plan";
 
 // Public page: no sign-in required
 export default function HomePage() {
